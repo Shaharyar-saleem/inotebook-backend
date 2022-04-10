@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
-const notesSchema = new Schema({
+const NotesSchema = new Schema({
   title:  {
     type: 'string',
     required: true,
@@ -20,4 +20,4 @@ const notesSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('notes', notesSchema);
+module.exports = mongoose.model('notes', NotesSchema);

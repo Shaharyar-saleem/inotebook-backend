@@ -5,9 +5,11 @@ const port = 3000
 
 connectToMongo()
 
-app.get('/', (req, res) => {
-  res.send('Hello Shaharyar')
-})
+
+// Routes for application
+app.use('/login', require('./routes/auth'))
+app.use('/notes', require('./routes/notes'))
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
