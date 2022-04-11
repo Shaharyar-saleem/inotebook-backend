@@ -3,11 +3,12 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+app.use(express.json())
 connectToMongo()
 
 
 // Routes for application
-app.use('/login', require('./routes/auth'))
+app.use('/api/auth', require('./routes/auth'))
 app.use('/notes', require('./routes/notes'))
 
 
