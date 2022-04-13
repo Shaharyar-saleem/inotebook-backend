@@ -3,7 +3,9 @@ const router = express.Router();
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const saltRounds = 10;
+const JWT_SECRET_KEY = "youaresecurehere";
 
 // End point for register a User : login is not required for this route
 router.post(
@@ -29,12 +31,19 @@ router.post(
     let securePassword = bcrypt.hashSync(req.body.password, saltRounds)
     console.log("Secure password:", securePassword)
     // Creating a user in the User table/object
-    User.create({
+     user = User.create({
       name: req.body.name,
       email: req.body.email,
       password: securePassword,
     });
-    res.json(req.body);
+    const tokenData = {
+      user: {
+        "id": req.body.id, 
+      }
+    }
+    const token = jwt.sign(tokenData, JWT_SECRET_KEY);
+    console.log("token:", token);
+    res.json(token);
     } catch (error) {
        console.log("error", error.message);
        res.status(500).json({ error: "something went wrong"})
