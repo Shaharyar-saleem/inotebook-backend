@@ -4,7 +4,7 @@ const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const fetchUser = require("../middleware/fetchUser")
+const fetchUser = require("../middleware/fetchUser");
 const saltRounds = 10;
 const JWT_SECRET_KEY = "youaresecurehere";
 
@@ -70,7 +70,6 @@ router.post(
           .json({ error: "Please enter the correct credentials" });
       }
       const userPassword = await bcrypt.compare(password, user.password);
-      console.log("DB password:", userPassword);
       if (!userPassword) {
         return res
           .status(400)
@@ -92,9 +91,7 @@ router.post(
 // ROUTE 3: end point for get the login user data
 router.post("/fetchUser", fetchUser, async (req, res) => {
   try {
-    console.log("req data:", req.user.id)
     const userID = req.user.id;
-    console.log("USER ID:", userID);
     const user = await User.findById(userID).select("-password");
     res.json(user);
   } catch (error) {

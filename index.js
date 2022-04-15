@@ -9,7 +9,7 @@ connectToMongo()
 
 // Routes for application
 app.use('/api/auth', require('./routes/auth'))
-// app.use('/notes', require('./routes/notes'))
+app.use('/notes', require('./routes/notes'))
 
 
 app.listen(port, () => {
