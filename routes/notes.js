@@ -4,14 +4,18 @@ const Notes = require("../models/Notes");
 const { body, validationResult } = require("express-validator");
 const fetchUser = require("../middleware/fetchUser");
 
-router.get('/', (req, res) => {
-  res.json("hi there")
+// ROUTE 1: route for fetch all the notes related to the loggedIn user
+router.get('/getAllNotes', fetchUser, async (req, res) => {
+  const userId = req.user.id
+  const notes = await Notes.find({user: userId}).select()
+  res.json(notes)
 })
 
+// ROUTE 2: route for create Notes by a user
 router.post('/createNotes', fetchUser,
  [
-  body("title", "Title is required"),
-  body("description", "Description is required"),
+  body("title", "Enter A valid title").isLength({ min: 3 }),
+  body("description", "Enter a Valid Description").isLength({ min: 5 }),
  ], async (req, res) => {
   const errors = validationResult(req);
     if (!errors.isEmpty()) {
