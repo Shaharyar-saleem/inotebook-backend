@@ -26,7 +26,7 @@ router.post('/createNotes', fetchUser,
       user: req.user.id,
       title: req.body.title,
       description: req.body.description,
-      tags: req.body.tags,
+      tag: req.body.tag,
     })
     console.log("note is created:", notes);
     res.json(notes)
